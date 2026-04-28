@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.layout.padding
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -20,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import fr.sdv.mon_app_api.presentation.ui.screens.PokedexScreen
 import fr.sdv.mon_app_api.presentation.ui.screens.WhosThatPokemonScreen
 import fr.sdv.mon_app_api.presentation.viewmodel.MainViewModel
+import fr.sdv.mon_app_api.presentation.viewmodel.MainViewModelFactory
 
 private data class FooterDestination(val route: String, val label: String)
 
@@ -31,7 +33,8 @@ private val footerDestinations = listOf(pokedexDestination, gameDestination)
 fun AppNavigation(modifier: Modifier = Modifier) {
 
     val navController = rememberNavController()
-    val mainViewModel: MainViewModel = viewModel()
+    val context = LocalContext.current
+    val mainViewModel: MainViewModel = viewModel(factory = MainViewModelFactory(context))
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 

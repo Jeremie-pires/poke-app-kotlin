@@ -1,0 +1,77 @@
+{
+  "types": [
+    {
+      "name": "Acier",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/acier.png"
+    },
+    {
+      "name": "Combat",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/combat.png"
+    },
+    {
+      "name": "Dragon",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/dragon.png"
+    },
+    {
+      "name": "Eau",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/eau.png"
+    },
+    {
+      "name": "Électrik",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/electrik.png"
+    },
+    {
+      "name": "Fée",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/fee.png"
+    },
+    {
+      "name": "Feu",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/feu.png"
+    },
+    {
+      "name": "Glace",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/glace.png"
+    },
+    {
+      "name": "Insecte",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/insecte.png"
+    },
+    {
+      "name": "Normal",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/normal.png"
+    },
+    {
+      "name": "Plante",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/plante.png"
+    },
+    {
+      "name": "Poison",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/poison.png"
+    },
+    {
+      "name": "Psy",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/psy.png"
+    },
+    {
+      "name": "Roche",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/roche.png"
+    },
+    {
+      "name": "Sol",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/sol.png"
+    },
+    {
+      "name": "Spectre",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/spectre.png"
+    },
+    {
+      "name": "Ténèbres",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/tenebres.png"
+    },
+    {
+      "name": "Vol",
+      "image": "https://raw.githubusercontent.com/Yarkis01/TyraDex/images/types/vol.png"
+    }
+  ]
+}
+

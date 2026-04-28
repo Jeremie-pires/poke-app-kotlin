@@ -18,7 +18,11 @@ import kotlin.random.Random
 object KtorPokeApi {
     private const val POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/"
     private const val SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/"
+    private const val POKEMON_LIST_URL = "https://pokeapi.co/api/v2/pokemon?limit=1000&offset=0"
     private const val MAX_POKEMON_ID = 1025
+
+    // Cache pour les noms français afin de ne pas recharger à chaque fois
+    private val frenchNameCache = mutableMapOf<String, String>()
 
     private val client = HttpClient {
         install(Logging) {
@@ -33,7 +37,9 @@ object KtorPokeApi {
             json(Json { ignoreUnknownKeys = true }, contentType = ContentType.Any)
         }
         install(HttpTimeout) {
-            requestTimeoutMillis = 5000
+            requestTimeoutMillis = 15000
+            connectTimeoutMillis = 15000
+            socketTimeoutMillis = 15000
         }
     }
 
@@ -47,6 +53,33 @@ object KtorPokeApi {
     suspend fun loadPokemonSpecies(pokemonId: Int): PokemonSpeciesEntity {
         require(pokemonId > 0) { "L'id du Pokemon doit etre > 0." }
         return client.get(SPECIES_URL + pokemonId).body()
+    }
+
+    suspend fun loadPokemonList(): List<String> {
+        val response: PokemonListResponse = client.get(POKEMON_LIST_URL).body()
+        return response.results.map { it.name }
+    }
+
+    suspend fun getPokemonFrenchName(pokemonName: String): String {
+        // Vérifier le cache d'abord
+        if (frenchNameCache.containsKey(pokemonName)) {
+            return frenchNameCache[pokemonName] ?: pokemonName
+        }
+
+        return try {
+            // Charger les noms français via l'API /pokemon-species/{id}
+            val species: PokemonSpeciesDetailEntity = client.get(SPECIES_URL + pokemonName).body()
+            val frenchName = species.names.find { it.language.name == "fr" }?.name
+                ?: pokemonName.capitalize()
+
+            frenchNameCache[pokemonName] = frenchName
+            frenchName
+        } catch (e: Exception) {
+            // Si erreur, retourner le nom anglais en majuscule
+            val fallback = pokemonName.capitalize()
+            frenchNameCache[pokemonName] = fallback
+            fallback
+        }
     }
 
     suspend fun loadRandomPokemonGameData(): PokemonGameEntity {
@@ -122,6 +155,25 @@ data class PokemonSpeciesEntity(
     val generation: NamedApiResource
 )
 
+@Serializable
+data class PokemonSpeciesDetailEntity(
+    val id: Int,
+    val name: String,
+    val names: List<NameEntry>
+)
+
+@Serializable
+data class NameEntry(
+    val name: String,
+    val language: Language
+)
+
+@Serializable
+data class Language(
+    val name: String,
+    val url: String
+)
+
 data class PokemonGameEntity(
     val id: Int,
     val name: String,
@@ -130,4 +182,17 @@ data class PokemonGameEntity(
     val generation: String,
     val spriteUrl: String?
 )
+
+@Serializable
+data class PokemonListResponse(
+    val results: List<PokemonListItem>
+)
+
+@Serializable
+data class PokemonListItem(
+    val name: String,
+    val url: String
+)
+
+
 
